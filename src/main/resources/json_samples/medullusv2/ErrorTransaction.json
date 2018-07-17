@@ -1,0 +1,15 @@
+{
+  "refId":"string",
+  "seller":"string",
+  "buyer":"string",
+  "poNum":"alphanumeric",
+  "sku":"int",
+  "quantity":"int",
+  "currency":"string",
+  "unit":"int",
+  "amount":"int",
+  "invStts":"string",
+  "disputeReason":"string",
+  "disputeResDate":"date",
+  "disputeResSteps":"string"
+}

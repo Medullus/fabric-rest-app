@@ -1,0 +1,12 @@
+{
+  "refId":"string",
+  "seller":"",
+  "date":"",
+  "buyer":"",
+  "poNumber":"",
+  "sku":"",
+  "quantity":"int",
+  "currency":"",
+  "unitCost":"int/float",
+  "amount":"int/float"
+}

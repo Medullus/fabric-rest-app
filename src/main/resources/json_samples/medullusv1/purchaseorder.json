@@ -1,0 +1,31 @@
+{
+  "PO_no": "string_PK",
+  "From_CoCo": "string",
+  "To_CoCo": "string",
+  "PO_Date": "string",
+  "PO_Type": "string",
+  "PO_Valid_till_date": "string",
+  "Currency": "string",
+  "Total_PO_Amount": "string",
+  "line_level":[{
+    "Line_No.": "string",
+    "Product_Code": "string",
+    "Description": "string",
+    "Quantity": "string",
+    "Measurement_Unit": "string",
+    "Price_per_Unit": "string",
+    "Total_Price": "string",
+    "Line_item_Tax_1": "string",
+    "Line_item_Tax_Amount_1_": "string",
+    "Line_item_Tax_2": "string",
+    "Line_item_Tax_Amount_2": "string",
+    "Line_item_Tax_3": "string",
+    "Line_item_Tax_Amount_3": "string",
+    "Line_item_Tax_4": "string",
+    "Line_item_Tax_Amount_4": "string",
+    "Line_item_Tax_5": "string",
+    "Line_item_Tax_Amount_5": "string",
+    "Line_item_total_Price": "string"
+  }
+  ]
+}

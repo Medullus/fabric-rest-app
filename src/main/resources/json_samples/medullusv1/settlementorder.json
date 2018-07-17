@@ -1,0 +1,11 @@
+{
+  "SO_no": "string_PK",
+  "From_CoCo": "string",
+  "To_CoCo": "string",
+  "SO_Date": "string",
+  "SO_Valid_till_date": "string",
+  "Currency": "string",
+  "Total_SO_Amount": "string",
+  "Unique_SO_no": "string",
+  "Buyer_Accounting_details": "string"
+}

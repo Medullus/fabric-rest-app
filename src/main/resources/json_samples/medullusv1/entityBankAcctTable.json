@@ -1,0 +1,13 @@
+{
+  "CoCo": "string",
+  "Bank_Account_Code": "string_(CoCo+Currency)",
+  "Bank_Account_Currency": "string",
+  "Bank_Account_title": "string",
+  "Bank_account_no": "string",
+  "Bank_Name": "string",
+  "Bank_Address": "string",
+  "Entity_Address": "string",
+  "Swift_or_BIC": "string",
+  "Bank_Account_contact_name": "string",
+  "Bank_Account_contact_email_ID": "string"
+}

@@ -1,0 +1,7 @@
+{
+  "Line_No.": "string",
+  "Product_Code": "string",
+  "Description": "string",
+  "Quantity": "string",
+  "Measurement_Unit": "string"
+}

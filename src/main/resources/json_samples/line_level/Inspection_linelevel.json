@@ -1,0 +1,13 @@
+{
+  "Lineno": "string",
+  "Product_Code": "string",
+  "Description": "string",
+  "Qty_Ordered": "string",
+  "Qty_Shipped": "string",
+  "Qty_Received": "string",
+  "Qty_Acceptable": "string",
+  "Qty_Rejected": "string",
+  "Qty_Returned": "string",
+  "Qty_Under_Testing": "string",
+  "Comments": "string"
+}

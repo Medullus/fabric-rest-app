@@ -1,0 +1,19 @@
+{
+  "GRN_no": "string_PK",
+  "Receipt_Date": "string",
+  "From_CoCo": "string",
+  "To_CoCo": "string",
+  "Invoice_no": "string",
+  "Invoice_Date": "string",
+  "PO_no": "string",
+  "PO_Date": "string",
+  "line_level":[{
+    "Line_No.": "string",
+    "Product_Code": "string",
+    "Description": "string",
+    "Quantity": "string",
+    "Measurement_Unit": "string"
+  }
+  ]
+}
+

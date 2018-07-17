@@ -1,0 +1,13 @@
+{
+  "refId":"string",
+  "buyer":"string",
+  "doc":"string",
+  "seller":"string",
+  "sku":"string",
+  "quantity":"int",
+  "currency":"string",
+  "unitCost":"int/float",
+  "amount":"int/float",
+  "type":"string"
+
+}

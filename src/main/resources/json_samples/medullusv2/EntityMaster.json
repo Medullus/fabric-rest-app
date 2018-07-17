@@ -1,0 +1,14 @@
+{
+  "subName":"string",
+  "glEntityCode":"string",
+  "group":"string",
+  "fnlCurr":"string",
+  "country":"string",
+  "paymasterEligible":"string",
+  "paymaster":"string",
+  "bank":"string",
+  "account":"int",
+  "nettingSettRules":"string",
+  "additionalReview":"string",
+  "wht":"string"
+}
