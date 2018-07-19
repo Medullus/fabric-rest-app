@@ -39,7 +39,7 @@ public class TestUtil {
         Invoice[] invoices = new Invoice[5];
         for (int i = 0; i < 5; i++) {
             Invoice invoice = new Invoice();
-            invoice.setAmount("100");
+            invoice.setAmount("100,00");
             invoice.setBuyer("cary");
             invoice.setCurrency("USD");
             invoice.setDate("10032001");

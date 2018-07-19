@@ -36,7 +36,7 @@ public class ErrorTransactionDao {
         String payload;
         ErrorTransaction[] errorTransactions;
         try {
-            payload = fabricClient.query(caller, MISMATCHES_GET, null, getChaincodeInfo());
+            payload = fabricClient.query(caller, MISMATCHES_GET, new String[]{""}, getChaincodeInfo());
             logger.debug("got payload:");
             logger.debug(payload);
             errorTransactions = ErrorTransactionDaoMapper.mapArgsToErrorTransaction(payload);
