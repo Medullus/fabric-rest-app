@@ -42,6 +42,15 @@ public class ErrorTransactionService {
         return errorTransactions;
     }
 
+    public void deleteErrorTransaction(String caller) {
+        try {
+            errorTransactionDao.deleteErrorTransaction(caller);
+        } catch (ProposalException | TransactionException | CryptoException | NetworkConfigurationException | InvalidArgumentException | IllegalAccessException | InterruptedException | ExecutionException | InvocationTargetException | NoSuchMethodException | ClassNotFoundException | InstantiationException e) {
+            logger.error(e);
+            throw new InternalServerErrorException(e.getMessage());
+        }
+    }
+
     private void checkCaller(String caller){
         try {
             fabricClient.hasMember(caller);

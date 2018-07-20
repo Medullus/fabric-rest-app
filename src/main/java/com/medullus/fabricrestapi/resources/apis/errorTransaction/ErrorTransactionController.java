@@ -42,4 +42,17 @@ public class ErrorTransactionController {
 
         return errorTransactionMapper.mapServiceObjToResponse(errorTransactionService.getErrorTransaction(caller, null), "Unmatched Doc List", null);
     }
+
+
+    @RequestMapping(value = "/delete/{caller}", method = RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "Delete error transaction list")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK"),
+            @ApiResponse(code = 400, message = "Bad Request"),
+            @ApiResponse(code = 500, message = "Internal Server Error")
+    })
+    public void deleteUnmatch(@PathVariable("caller")String caller){
+        errorTransactionService.deleteErrorTransaction(caller);
+    }
 }

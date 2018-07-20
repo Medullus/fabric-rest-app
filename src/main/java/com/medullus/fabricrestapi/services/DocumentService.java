@@ -27,7 +27,6 @@ public class DocumentService {
         this.fabricClient = fabricClient;
     }
 
-
     public String addDocument(DocumentServicePojo documentServicePojo, String documentPK, String caller){
         checkCaller(caller);
 

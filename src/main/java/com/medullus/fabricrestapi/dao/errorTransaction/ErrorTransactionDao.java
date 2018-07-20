@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.ExecutionException;
 
+import static com.medullus.fabricrestapi.utils.Constants.MISMATCHES_DELETE;
 import static com.medullus.fabricrestapi.utils.Constants.MISMATCHES_GET;
 import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_CCNAME;
 import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_CCVER;
@@ -32,6 +33,17 @@ public class ErrorTransactionDao {
         this.fabricConfig = fabricConfig;
     }
 
+    public void deleteErrorTransaction(String caller) throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
+        String payload;
+        try {
+            payload = fabricClient.invoke(caller, MISMATCHES_DELETE, new String[]{""}, getChaincodeInfo());
+        } catch (ProposalException|ClassNotFoundException|CryptoException|NetworkConfigurationException|ExecutionException|InvalidArgumentException|IllegalAccessException|TransactionException|InterruptedException|InstantiationException|InvocationTargetException|NoSuchMethodException e) {
+            logger.error(e);
+            throw e;
+        }
+        logger.debug("Sent delete message");
+    }
+
     public ErrorTransaction[] getErrorTransaction(String caller, String org) throws IOException, ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, NetworkConfigurationException, CryptoException, ClassNotFoundException, TransactionException, ProposalException {
         String payload;
         ErrorTransaction[] errorTransactions;
@@ -45,6 +57,7 @@ public class ErrorTransactionDao {
             logger.error(e);
             throw e;
         }
+        logger.debug("Number of items:"+errorTransactions.length);
         return errorTransactions;
     }
 

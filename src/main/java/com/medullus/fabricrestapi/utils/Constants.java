@@ -16,6 +16,7 @@ public class Constants {
     public static final String PURCHASEORDER_GET = "RetrievePO";
 
     public static final String MISMATCHES_GET = "GetUnmatched";
+    public static final String MISMATCHES_DELETE = "DeleteUnmatched";
 
     public static final String DOCUMENT_ADD = "AddDocuments";
     public static final String DOCUMENT_GET = "RetrieveDocuments";
