@@ -11,13 +11,19 @@ import io.swagger.annotations.ApiResponses;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
+
+import java.util.concurrent.Callable;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Api(tags = "User")
 @RestController
 @RequestMapping(path = "/users", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 public class UsersController {
 
+    private final AtomicInteger counter = new AtomicInteger(0);
     private final Logger logger = Logger.getLogger(UsersController.class);
 
     private UserService userService;
@@ -44,5 +50,28 @@ public class UsersController {
 
         return usersMapper.mapServiceToResponse(userService.addUserToNetwork(userServicePojo), "user added");
     }
+
+//    @RequestMapping( value = "", method = RequestMethod.POST)
+//    @ResponseBody
+//    @ApiOperation(value = "Add a user to the network. Ignore requestHeader, this field will be used later for org's admin to register their member")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "OK"),
+//            @ApiResponse(code = 400, message = "Bad Request"),
+//            @ApiResponse(code = 500, message = "Internal Server Error")
+//    })
+//    public DeferredResult<ResponseEntity<?>> addToNetwork(@RequestBody UserRegisterRequest userRegisterRequest){
+//        //UserRegisterResponse
+//        logger.debug("registering user: "+userRegisterRequest.getUserRegister().getUserName());
+//
+//        UserServicePojo userServicePojo = usersMapper.mapReqToService(userRegisterRequest);
+//
+//        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
+//
+//        new Thread(() -> {
+//            result.setResult(ResponseEntity.ok(usersMapper.mapServiceToResponse(userService.addUserToNetwork(userServicePojo), "user added")));
+//        }, "MyThread--" + counter.incrementAndGet()).start();
+//
+//        return result;
+//    }
 
 }

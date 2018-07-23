@@ -23,7 +23,7 @@
           "endorsingPeer": true,
           "chaincodeQuery": true,
           "ledgerQuery": true,
-          "eventSource": true
+          "eventSource": false
         }
       },
       "chaincodes": [

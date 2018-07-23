@@ -2,10 +2,7 @@ package com.medullus.fabricrestapi.resources.apis.document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.medullus.fabricrestapi.domains.dto.ResponseHeader;
-import com.medullus.fabricrestapi.domains.dto.document.Document;
-import com.medullus.fabricrestapi.domains.dto.document.DocumentRequest;
-import com.medullus.fabricrestapi.domains.dto.document.DocumentResponse;
-import com.medullus.fabricrestapi.domains.dto.document.DocumentServicePojo;
+import com.medullus.fabricrestapi.domains.dto.document.*;
 import com.medullus.fabricrestapi.exceptions.InternalServerErrorException;
 import com.medullus.fabricrestapi.services.DocumentService;
 import org.dozer.DozerBeanMapperBuilder;
@@ -16,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -33,13 +31,14 @@ public class DocumentMapper {
                 .build();
     }
 
-    public DocumentServicePojo mapResourceToServicePojo(DocumentRequest documentRequest){
-        DocumentServicePojo validEntityMasterStub = mapper.map(documentRequest, DocumentServicePojo.class);
+    public DocumentServiceBulkPojo mapResourceToServicePojo(DocumentRequest documentRequest){
+        DocumentServiceBulkPojo validEntityMasterStub = mapper.map(documentRequest, DocumentServiceBulkPojo.class);
         return validEntityMasterStub;
     }
 
-    public DocumentResponse mapServiceObjToResponse(String documents, String message, String txId){
+    public DocumentResponse mapServiceObjToResponse(String documents,String message, Map<String, String> txIdList){
         DocumentResponse documentResponse = new DocumentResponse();
+
         if(documents != null){
             ObjectMapper om = new ObjectMapper();
             Map<String, Object> docs;
@@ -49,12 +48,13 @@ public class DocumentMapper {
                 e.printStackTrace();
                 throw new InternalServerErrorException(e.getMessage());
             }
-            documentResponse.setDocuments(docs);
+            documentResponse.setDocument(docs);
         }
         ResponseHeader responseHeader = new ResponseHeader();
         responseHeader.setMessage(message);
-        responseHeader.setTxID(txId);
+
         documentResponse.setResponseHeader(responseHeader);
+        documentResponse.setTxResults(txIdList);
 
         return documentResponse;
     }
@@ -64,7 +64,7 @@ public class DocumentMapper {
             final String documents = "documents";
             @Override
             protected void configure() {
-                mapping(DocumentRequest.class, DocumentServicePojo.class)
+                mapping(DocumentRequest.class, DocumentServiceBulkPojo.class)
                         .fields("requestHeader.caller", "caller")
                         .fields("requestHeader.org", "org")
                         .fields(documents, documents);

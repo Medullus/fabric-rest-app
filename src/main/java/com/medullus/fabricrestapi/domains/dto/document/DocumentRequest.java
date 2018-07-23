@@ -13,8 +13,16 @@ public class DocumentRequest {
     @ApiModelProperty
     private RequestHeader requestHeader;
 
-    @ApiModelProperty(example = "{\"key1\":\"value1\"}")
-    private Map<String, Object> documents;
+    public List<Map<String, Object>> getDocuments() {
+        return documents;
+    }
+
+    public void setDocuments(List<Map<String, Object>> documents) {
+        this.documents = documents;
+    }
+
+    @ApiModelProperty(example = "[{\"documentPK\":\"required\",\"key1\":\"value1\"},{\"documentPK\":\"required\"}]")
+    private List<Map<String, Object>> documents;
 
     public RequestHeader getRequestHeader() {
         return requestHeader;
@@ -24,13 +32,6 @@ public class DocumentRequest {
         this.requestHeader = requestHeader;
     }
 
-    public Map<String, Object> getDocuments() {
-        return documents;
-    }
-
-    public void setDocuments(Map<String, Object> documents) {
-        this.documents = documents;
-    }
 
     @Override
     public String toString() {

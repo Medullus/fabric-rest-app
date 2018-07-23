@@ -13,14 +13,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Api(tags = "Invoice")
 @RestController
 @RequestMapping(path = "/invoices")
 public class InvoiceController {
     private static final Logger logger = Logger.getLogger(InvoiceController.class);
-
+    private final AtomicInteger counter = new AtomicInteger(0);
     private InvoiceService invoiceService;
     private InvoiceMapper invoiceMapper;
 
@@ -79,4 +83,29 @@ public class InvoiceController {
         logger.debug("adding invoice");
         return invoiceMapper.mapServiceObjToResponse(null,null,invoiceService.addInvoice(invoiceServicePojo));
     }
+
+//    @RequestMapping(value = "", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.OK)
+//    @ApiOperation(value = "Add invoice to ledger.Caller must be registered from /users api. RefId, poNumber, and caller is used to create composite key. To get invoice, use refId and poNumber")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "OK" ),
+//            @ApiResponse(code = 400, message = "Bad Request"),
+//            @ApiResponse(code = 500, message = "Internal Server Error" )
+//    })
+//    public DeferredResult<ResponseEntity<InvoiceResponse>> addInvoice(@RequestBody InvoiceRequest invoiceRequest){
+//
+////        InvoiceResponse
+//        InvoiceServicePojo invoiceServicePojo = invoiceMapper.mapResourceToServicePojo(invoiceRequest);
+//        logger.debug("adding invoice");
+////        return invoiceMapper.mapServiceObjToResponse(null,null,invoiceService.addInvoice(invoiceServicePojo));
+//
+//        DeferredResult<ResponseEntity<InvoiceResponse>> result = new DeferredResult<>();
+//
+//        new Thread(() -> {
+//            result.setResult(ResponseEntity.ok(invoiceMapper.mapServiceObjToResponse(null,null,invoiceService.addInvoice(invoiceServicePojo))));
+//        }, "MyThread-" + counter.incrementAndGet()).start();
+//
+//        return result;
+//    }
 }

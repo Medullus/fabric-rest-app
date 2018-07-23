@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class PurchaseOrderService {
 
-    private static final Logger logger = Logger.getLogger(InvoiceService.class);
+    private static final Logger logger = Logger.getLogger(PurchaseOrderService.class);
 
     private PurchaseOrderDao purchaseOrderDao;
     private FabricClient fabricClient;

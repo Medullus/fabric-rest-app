@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.medullus.fabricrestapi.domains.dto.ResponseHeader;
 import com.medullus.fabricrestapi.domains.dto.document.DocumentRequest;
 import com.medullus.fabricrestapi.domains.dto.document.DocumentResponse;
+import com.medullus.fabricrestapi.domains.dto.document.DocumentServiceBulkPojo;
 import com.medullus.fabricrestapi.domains.dto.document.DocumentServicePojo;
 import com.medullus.fabricrestapi.services.DocumentService;
 import io.swagger.annotations.Api;
@@ -14,10 +15,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.async.DeferredResult;
 
 //TODO
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicInteger;
+
 //
 @Api(tags = "Document")
 @RestController
@@ -62,13 +69,13 @@ public class DocumentController {
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public DocumentResponse getEntityMaster(@PathVariable("documentPK") String documentPK,
+    public DocumentResponse getDoc(@PathVariable("documentPK") String documentPK,
                                             @RequestHeader(value = "caller") String caller) {
         logger.debug("retrieving :" + documentPK);
         return documentMapper.mapServiceObjToResponse(documentService.getDocument(documentPK, caller, null), "Found " + documentPK, null);
     }
 //
-//
+
     @RequestMapping(value = "/{documentPK}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
@@ -79,49 +86,55 @@ public class DocumentController {
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
     public DocumentResponse addDocument(@PathVariable("documentPK") String documentPK,
-                                        @RequestBody DocumentRequest documentRequest) {
-        DocumentServicePojo documentServicePojo = documentMapper.mapResourceToServicePojo(documentRequest);
+                                        @RequestBody DocumentRequest documentRequest) throws ExecutionException, InterruptedException {
+        DocumentServiceBulkPojo documentServiceBulkPojo = documentMapper.mapResourceToServicePojo(documentRequest);
         logger.debug("adding document");
-        return documentMapper.mapServiceObjToResponse(null, null, documentService.addDocument(documentServicePojo, documentPK, documentRequest.getRequestHeader().getCaller()));
+        return documentMapper.mapServiceObjToResponse(null,"added all", documentService.addDocument(documentServiceBulkPojo, documentPK, documentRequest.getRequestHeader().getCaller()));
     }
 //
-//
-//    @RequestMapping(value = "test/{docPk}", method = RequestMethod.POST)
+//    @RequestMapping(value = "/{documentPK}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
 //    @ResponseStatus(HttpStatus.OK)
-//    @ApiOperation(value = "added Document to ledger")
+//    @ApiOperation(value = "Add any generic 'non-nested' JSON to ledger.")
 //    @ApiResponses({
 //            @ApiResponse(code = 200, message = "Document added"),
 //            @ApiResponse(code = 400, message = "Bad Request"),
 //            @ApiResponse(code = 500, message = "Internal Server Error")
 //    })
-//    public DocumentResponse testAddDoc(@PathVariable("docPk")String docPK,
-//                                    @RequestBody DocumentRequest documentRequest){
-//        System.out.println("pass this to cc for key to store doc "+ docPK);
+//    public DeferredResult<ResponseEntity<?>> addDocument(@PathVariable("documentPK") String documentPK,
+//                                                         @RequestBody DocumentRequest documentRequest) {
+//        DocumentServicePojo documentServicePojo = documentMapper.mapResourceToServicePojo(documentRequest);
+//        logger.debug("adding document");
 //
-//        System.out.println(documentRequest.getRequestHeader().getCaller());
-//        System.out.println(documentRequest.getRequestHeader().getOrg());
+//        DeferredResult<ResponseEntity<?>> result = new DeferredResult<>();
 //
+//        new Thread(() ->{
+//            result.setResult(ResponseEntity.ok(documentMapper.mapServiceObjToResponse(null, null, documentService.addDocument(documentServicePojo, documentPK, documentRequest.getRequestHeader().getCaller()))));
+//        }, "MyThread-" + counter.incrementAndGet()).start();
 //
-//        for(Map.Entry<String, Object> entry : documentRequest.getDocuments().entrySet()){
-//            //map example to get k,v
-//            System.out.printf("key %s : value %s", entry.getKey(), entry.getValue());
-//        }
-//
-//        //map to json string example
-//        Gson objGson = new Gson();
-//        String anyJsonStr = objGson.toJson(documentRequest.getDocuments());
-//
-//        System.out.println(anyJsonStr);
-//
-//        DocumentResponse resp = new DocumentResponse();
-//        ResponseHeader responseHeader = new ResponseHeader();
-//        responseHeader.setTxID("txIDReturned by Service");
-//
-//        resp.setResponseHeader(responseHeader);
-//
-//        return resp;
-//
+//        return result;
 //    }
+
+//    @RequestMapping(value = "/{documentPK}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseBody
+//    @ResponseStatus(HttpStatus.OK)
+//    @ApiOperation(value = "Add any generic 'non-nested' JSON to ledger.")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "Document added"),
+//            @ApiResponse(code = 400, message = "Bad Request"),
+//            @ApiResponse(code = 500, message = "Internal Server Error")
+//    })
+//    public Callable<DocumentResponse> addDocument(@PathVariable("documentPK") String documentPK,
+//                                                  @RequestBody DocumentRequest documentRequest) {
+//        DocumentServicePojo documentServicePojo = documentMapper.mapResourceToServicePojo(documentRequest);
+//        logger.debug("adding document");
+////        return documentMapper.mapServiceObjToResponse(null, null, documentService.addDocument(documentServicePojo, documentPK, documentRequest.getRequestHeader().getCaller()));
 //
+//        return () -> documentMapper.mapServiceObjToResponse(null, null, documentService.addDocument(documentServicePojo, documentPK, documentRequest.getRequestHeader().getCaller()));
+//    }
+
+
+
+    private final AtomicInteger counter = new AtomicInteger(0);
 
 }

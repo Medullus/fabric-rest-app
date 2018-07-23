@@ -14,15 +14,25 @@ public class DocumentResponse {
     private ResponseHeader responseHeader;
 
     @ApiModelProperty
-    private Map<String, Object> documents;
+    private Map<String, Object> document;
 
+    @ApiModelProperty
+    private Map<String, String> txResults;
 
-    public Map<String, Object> getDocuments() {
-        return documents;
+    public Map<String, Object> getDocument() {
+        return document;
     }
 
-    public void setDocuments(Map<String, Object> documents) {
-        this.documents = documents;
+    public void setDocument(Map<String, Object> document) {
+        this.document = document;
+    }
+
+    public Map<String, String> getTxResults() {
+        return txResults;
+    }
+
+    public void setTxResults(Map<String, String> txResults) {
+        this.txResults = txResults;
     }
 
     public ResponseHeader getResponseHeader() {
@@ -33,12 +43,12 @@ public class DocumentResponse {
         this.responseHeader = responseHeader;
     }
 
-
     @Override
     public String toString() {
         return "DocumentResponse{" +
                 "responseHeader=" + responseHeader +
-                ", documents=" + documents +
+                ", document=" + document +
+                ", txResults=" + txResults +
                 '}';
     }
 }
