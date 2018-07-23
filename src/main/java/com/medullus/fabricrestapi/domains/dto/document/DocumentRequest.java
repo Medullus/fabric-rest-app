@@ -21,7 +21,7 @@ public class DocumentRequest {
         this.documents = documents;
     }
 
-    @ApiModelProperty(example = "[{\"documentPK\":\"required\",\"key1\":\"value1\"},{\"documentPK\":\"required\"}]")
+    @ApiModelProperty(example = "[{\"documentPK\":\"required\",\"anyKey1\":\"value1\"},{\"documentPK\":\"required\",\"anyKey1\":\"value1\",\"anyKey2\":\"value2\"}]")
     private List<Map<String, Object>> documents;
 
     public RequestHeader getRequestHeader() {

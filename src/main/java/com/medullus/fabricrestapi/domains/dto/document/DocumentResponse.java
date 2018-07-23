@@ -16,7 +16,7 @@ public class DocumentResponse {
     @ApiModelProperty
     private Map<String, Object> document;
 
-    @ApiModelProperty
+    @ApiModelProperty(example = "{\"documentPK\":\"transactionID\"}")
     private Map<String, String> txResults;
 
     public Map<String, Object> getDocument() {

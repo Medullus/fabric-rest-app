@@ -76,20 +76,19 @@ public class DocumentController {
     }
 //
 
-    @RequestMapping(value = "/{documentPK}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "Add any generic 'non-nested' JSON to ledger.")
+    @ApiOperation(value = "Add any generic 'non-nested' JSON to ledger. Required field documentPK must be unique")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Document added"),
             @ApiResponse(code = 400, message = "Bad Request"),
             @ApiResponse(code = 500, message = "Internal Server Error")
     })
-    public DocumentResponse addDocument(@PathVariable("documentPK") String documentPK,
-                                        @RequestBody DocumentRequest documentRequest) throws ExecutionException, InterruptedException {
+    public DocumentResponse addDocument(@RequestBody DocumentRequest documentRequest) throws ExecutionException, InterruptedException {
         DocumentServiceBulkPojo documentServiceBulkPojo = documentMapper.mapResourceToServicePojo(documentRequest);
         logger.debug("adding document");
-        return documentMapper.mapServiceObjToResponse(null,"added all", documentService.addDocument(documentServiceBulkPojo, documentPK, documentRequest.getRequestHeader().getCaller()));
+        return documentMapper.mapServiceObjToResponse(null,"added all", documentService.addDocument(documentServiceBulkPojo, null, documentRequest.getRequestHeader().getCaller()));
     }
 //
 //    @RequestMapping(value = "/{documentPK}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
