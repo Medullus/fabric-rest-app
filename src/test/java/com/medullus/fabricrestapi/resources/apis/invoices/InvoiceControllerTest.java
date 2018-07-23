@@ -103,14 +103,6 @@ public class InvoiceControllerTest {
 
     }
 
-    @Test
-    public void testAddInvoiceFail() throws Exception {
-
-        this.mockMvc
-                .perform(post(invoiceUrl).accept(MediaType.APPLICATION_JSON_VALUE).content(badJson).contentType(MediaType.APPLICATION_JSON))
-                .andDo(print())
-                .andExpect(status().isBadRequest());
-    }
 
     @Test
     public void testAddInvoiceFail500() throws Exception {

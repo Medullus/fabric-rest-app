@@ -77,7 +77,7 @@ public class InvoiceServiceTest {
 
         Invoice[] invoices = invoiceService.getInvoice("dont", "shit", "matter", "what" );
         assertEquals(5, invoices.length);
-        assertEquals("100", invoices[0].getAmount());
+        assertEquals("100,00", invoices[0].getAmount());
 
     }
 

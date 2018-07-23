@@ -117,7 +117,7 @@ public class InvoiceDaoTest {
         Invoice[] invoice1 = invoiceDao.getInvoice("dontmatter", "any", "becauseOf", "any()" );
 
         assertEquals(5, invoice1.length);
-        assertEquals("100", invoice1[0].getAmount());
+        assertEquals("100,00", invoice1[0].getAmount());
 
     }
 
