@@ -40,10 +40,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class InvoiceControllerTest {
 
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @MockBean
-    InvoiceService mockInvoiceService;
+    private InvoiceService mockInvoiceService;
 
     @MockBean
     InvoiceMapper mockInvoiceMapper;
@@ -60,7 +60,7 @@ public class InvoiceControllerTest {
     @Before
     public void setup() throws JsonProcessingException {
 
-        mockInvoiceMapper = new InvoiceMapper(mockInvoiceService);
+//        mockInvoiceMapper = new InvoiceMapper(mockInvoiceService);
 
         invoices = TestUtil.getInvoices();
 
@@ -73,13 +73,9 @@ public class InvoiceControllerTest {
         invoiceResponse.setResponseHeader(TestUtil.getResponseHeader());
         invoiceResponse.setInvoices(Arrays.asList(invoices));
 
-
-//        doReturn(TestUtil.txId).when(mockInvoiceService).addInvoice(any(InvoiceServicePojo.class));
-//        doReturn(TestUtil.txId).when(mockInvoiceService).updateInvoice(any(InvoiceServicePojo.class));
-//        doReturn(invoices).when(mockInvoiceService).getInvoice(anyString(), anyString(), anyString(), anyString() );
         when(mockInvoiceService.addInvoice(any())).thenReturn(TestUtil.txId);
         when(mockInvoiceService.updateInvoice(any())).thenReturn(TestUtil.txId);
-        when(mockInvoiceService.getInvoice(anyString(),anyString(), anyString(),anyString())).thenReturn(invoices);
+        when(mockInvoiceService.getInvoice(any(),any(), any(),any())).thenReturn(invoices);
 
         ObjectMapper objectMapper = new ObjectMapper();
         this.jsonString = objectMapper.writeValueAsString(invoiceRequest);
@@ -138,7 +134,7 @@ public class InvoiceControllerTest {
 
     @Test
     public void testUpdate500Error() throws Exception {
-        doThrow(InternalServerErrorException.class).when(mockInvoiceService).updateInvoice(any());
+        when(mockInvoiceService.updateInvoice(any())).thenThrow(InternalServerErrorException.class);
 
         this.mockMvc
                 .perform(put(invoiceUrl).accept(MediaType.APPLICATION_JSON).content(jsonString).contentType(MediaType.APPLICATION_JSON))
@@ -162,12 +158,11 @@ public class InvoiceControllerTest {
     }
 
     @Test
-    public void testRetrieveInvoiceFail() throws Exception {
+    public void testRetrieveInvoiceFailNoCaller() throws Exception {
         doThrow(BadRequestException.class).when(mockInvoiceService).getInvoice(anyString(), anyString(), anyString(), anyString());
 
         this.mockMvc
                 .perform(get(invoiceUrl+"/"+invoicePK+"/anyponum")
-                        .header("caller", "")
                         .header("org", "Org1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -176,15 +171,18 @@ public class InvoiceControllerTest {
 
     @Test
     public void testRetrieveInvoice500() throws Exception {
-        doThrow(InternalServerErrorException.class).when(mockInvoiceService).getInvoice(anyString(), anyString(), anyString(), anyString() );
+        when(mockInvoiceService.getInvoice(any(), any(), any(), any())).thenThrow(InternalServerErrorException.class);
+
+
+//        doThrow(InternalServerErrorException.class).when(mockInvoiceService).getInvoice(anyString(), anyString(), anyString(), anyString() );
         this.mockMvc
                 .perform(get(invoiceUrl+"/"+invoicePK+"/anyponum")
                         .header("caller", "caller")
-                        .header("org", "Org1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isInternalServerError());
 
     }
+
 
 }

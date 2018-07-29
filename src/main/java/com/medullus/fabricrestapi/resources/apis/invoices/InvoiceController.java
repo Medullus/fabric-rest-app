@@ -53,7 +53,7 @@ public class InvoiceController {
 
     @RequestMapping(value = "/{refId}/{poNumber}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
+//    @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "get Invoice from ledger")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK" ),

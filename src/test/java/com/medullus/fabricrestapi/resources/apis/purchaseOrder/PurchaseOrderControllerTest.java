@@ -163,12 +163,10 @@ public class PurchaseOrderControllerTest {
     }
 
     @Test
-    public void testRetrievePurchaseOrderFail() throws Exception {
-        doThrow(BadRequestException.class).when(mockPurchaseOrderService).getPurchaseOrder(anyString(), anyString(), anyString());
+    public void testRetrievePurchaseOrderFailNoCaller() throws Exception {
 
         this.mockMvc
                 .perform(get(poUrl + "/" + poNumber)
-                        .header("caller", "")
                         .header("org", "Org1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -177,7 +175,8 @@ public class PurchaseOrderControllerTest {
 
     @Test
     public void testRetrievePurchaseOrder500() throws Exception {
-        doThrow(InternalServerErrorException.class).when(mockPurchaseOrderService).getPurchaseOrder(anyString(), anyString(), anyString());
+
+        when(mockPurchaseOrderService.getPurchaseOrder(any(), any(), any())).thenThrow(InternalServerErrorException.class);
         this.mockMvc
                 .perform(get(poUrl + "/" + poNumber)
                         .header("caller", "caller")

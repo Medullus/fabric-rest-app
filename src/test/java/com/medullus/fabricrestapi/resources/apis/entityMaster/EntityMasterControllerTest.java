@@ -67,12 +67,12 @@ public class EntityMasterControllerTest {
         entityMasterResponse.setResponseHeader(TestUtil.getResponseHeader());
         entityMasterResponse.setEntityMasters(Arrays.asList(entityMasters));
 
-        doCallRealMethod().when(mockEntityMasterMapper).mapServiceObjToResponse(TestUtil.getEntityMasters(), "blank", TestUtil.txId);
-        doCallRealMethod().when(mockEntityMasterMapper).mapResourceToServicePojo(entityMasterRequest);
+//        doCallRealMethod().when(mockEntityMasterMapper).mapServiceObjToResponse(TestUtil.getEntityMasters(), "blank", TestUtil.txId);
+//        doCallRealMethod().when(mockEntityMasterMapper).mapResourceToServicePojo(entityMasterRequest);
 
-        doReturn(TestUtil.txId).when(mockEntityMasterService).addEntityMaster(any(EntityMasterServicePojo.class));
-        doReturn(TestUtil.txId).when(mockEntityMasterService).updateEntityMaster(any(EntityMasterServicePojo.class));
-        doReturn(entityMasters).when(mockEntityMasterService).getEntityMaster(anyString(), anyString(), anyString());
+//        doReturn(TestUtil.txId).when(mockEntityMasterService).addEntityMaster(any(EntityMasterServicePojo.class));
+//        doReturn(TestUtil.txId).when(mockEntityMasterService).updateEntityMaster(any(EntityMasterServicePojo.class));
+//        doReturn(entityMasters).when(mockEntityMasterService).getEntityMaster(anyString(), anyString(), anyString());
 
         this.jsonString = new ObjectMapper().writeValueAsString(entityMasterRequest);
 
@@ -99,7 +99,7 @@ public class EntityMasterControllerTest {
     }
 
     @Test
-    public void testAddInvoiceFail500() throws Exception {
+    public void testAddEntityFail500() throws Exception {
         //THIS IS IMPORTANT!! Syntax! TODO different from when clause in setup
         doThrow(InternalServerErrorException.class).when(mockEntityMasterService).addEntityMaster(any());
 
@@ -156,11 +156,8 @@ public class EntityMasterControllerTest {
 
     @Test
     public void testRetrieveEntityMasterFail() throws Exception {
-        doThrow(BadRequestException.class).when(mockEntityMasterService).getEntityMaster(anyString(), anyString(), anyString());
-
         this.mockMvc
                 .perform(get(entityMasterUrl + "/" + entityKey)
-                        .header("caller", "")
                         .header("org", "Org1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -169,7 +166,8 @@ public class EntityMasterControllerTest {
 
     @Test
     public void testRetrieveEntityMaster500() throws Exception {
-        doThrow(InternalServerErrorException.class).when(mockEntityMasterService).getEntityMaster(anyString(), anyString(), anyString());
+
+        when(mockEntityMasterService.getEntityMaster(any(), any(), any())).thenThrow(InternalServerErrorException.class);
         this.mockMvc
                 .perform(get(entityMasterUrl + "/" + entityKey)
                         .header("caller", "caller")

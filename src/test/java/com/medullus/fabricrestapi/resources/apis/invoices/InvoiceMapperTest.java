@@ -43,7 +43,7 @@ public class InvoiceMapperTest {
         assertEquals(5, invoiceServicePojo.getInvoices().size());
 
         for(Invoice invoice : invoiceServicePojo.getInvoices()){
-            assertEquals("100", invoice.getAmount());
+            assertEquals("100,00", invoice.getAmount());
         }
 
     }
