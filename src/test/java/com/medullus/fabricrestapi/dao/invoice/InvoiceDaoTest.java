@@ -28,9 +28,7 @@ import static com.mhc.fabric.client.config.FabricConfigParams.MHC_FABRIC_CCVER;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 public class InvoiceDaoTest {
@@ -68,15 +66,28 @@ public class InvoiceDaoTest {
          * NetworkConfig networkConfig = fabricClient.getNetworkConfig();
          * String channel = networkConfig.getChannelNames().iterator().next();
          * **/
-        doReturn(mockNetworkConfig).when(mockFabricClient).getNetworkConfig();
+
+
+//        doReturn(mockNetworkConfig).when(mockFabricClient).getNetworkConfig();
+        when(mockFabricClient.getNetworkConfig()).thenReturn(mockNetworkConfig);
+
         Set<String> mockSetString = mock(Set.class);
         Iterator mockIterator = mock(Iterator.class);
-        doReturn(mockSetString).when(mockNetworkConfig).getChannelNames();
-        doReturn(mockIterator).when(mockSetString).iterator();
-        doReturn(TestUtil.channel).when(mockIterator).next();
+
+//        doReturn(mockSetString).when(mockNetworkConfig).getChannelNames();
+        when(mockNetworkConfig.getChannelNames()).thenReturn(mockSetString);
+
+//        doReturn(mockIterator).when(mockSetString).iterator();
+        when(mockSetString.iterator()).thenReturn(mockIterator);
+
+//        doReturn(TestUtil.channel).when(mockIterator).next();
+        when(mockIterator.next()).thenReturn(TestUtil.channel);
 //        ChaincodeInfo chaincodeInfo = new ChaincodeInfo(fabricConfig.getProperty(MHC_FABRIC_CCNAME),fabricConfig.getProperty(MHC_FABRIC_CCVER),channel );
-        doReturn(TestUtil.ccName).when(mockFabricConfig).getProperty(MHC_FABRIC_CCNAME);
-        doReturn(TestUtil.ccVer).when(mockFabricConfig).getProperty(MHC_FABRIC_CCVER);
+//        doReturn(TestUtil.ccName).when(mockFabricConfig).getProperty(MHC_FABRIC_CCNAME);
+        when(mockFabricConfig.getProperty(MHC_FABRIC_CCNAME)).thenReturn(TestUtil.ccName);
+
+//        doReturn(TestUtil.ccVer).when(mockFabricConfig).getProperty(MHC_FABRIC_CCVER);
+        when(mockFabricConfig.getProperty(MHC_FABRIC_CCVER)).thenReturn(TestUtil.ccVer);
 
     }
 

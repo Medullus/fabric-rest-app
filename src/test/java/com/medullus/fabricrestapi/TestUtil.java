@@ -17,11 +17,12 @@ public class TestUtil {
     public final static String ccName = "ccName";
     public final static String ccVer = "ccVer";
     public final static String txId = "faketxID";
+    public final static String org = "org1";
 
     public static RequestHeader getReqHeader() {
         RequestHeader requestHeader = new RequestHeader();
         requestHeader.setCaller(caller);
-        requestHeader.setOrg("org1");
+        requestHeader.setOrg(org);
         return requestHeader;
     }
 
@@ -113,7 +114,7 @@ public class TestUtil {
 
 
     /*******************
-     * PURCHASE ORDERS *
+     * ERRORTRAN ORDERS *
      *******************/
     public static ErrorTransaction[] getErrorTransactions() {
         ErrorTransaction[] errorTransactions = new ErrorTransaction[5];

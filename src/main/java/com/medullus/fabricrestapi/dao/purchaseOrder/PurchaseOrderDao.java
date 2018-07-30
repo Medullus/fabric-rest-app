@@ -59,7 +59,7 @@ public class PurchaseOrderDao {
         return purchaseOrders;
     }
 
-    private String invokeHelper(PurchaseOrderServicePojo purchaseOrderServicePojo, String fcn) throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
+    protected String invokeHelper(PurchaseOrderServicePojo purchaseOrderServicePojo, String fcn) throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
         String[] args = new String[1];
         args[0] = PurchaseOrderDaoMapper.mapPurchaseOrderToArgs(purchaseOrderServicePojo.getPurchaseOrdersList());
         String txId;
