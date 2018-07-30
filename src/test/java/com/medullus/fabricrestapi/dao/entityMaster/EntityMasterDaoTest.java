@@ -55,7 +55,7 @@ public class EntityMasterDaoTest {
         when(mockIterator.next()).thenReturn(TestUtil.channel);
         when(mockFabricConfig.getProperty(MHC_FABRIC_CCNAME)).thenReturn(TestUtil.ccName);
         when(mockFabricConfig.getProperty(MHC_FABRIC_CCVER)).thenReturn(TestUtil.ccVer);
-        when(mockFabricClient.invoke(any(),any(), any(), any())).thenReturn(TestUtil.txId);
+        when(mockFabricClient.invoke(any(),any(), any(), any())).thenReturn(TestUtil.getFut());
 
         this.entityMasterServicePojo = new EntityMasterServicePojo();
         entityMasterServicePojo.setCaller(TestUtil.caller);

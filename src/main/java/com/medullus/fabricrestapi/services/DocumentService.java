@@ -70,14 +70,15 @@ public class DocumentService {
 
             futMap.forEach((k, v) ->{
 
-                if(v.isDone()){
-                    try {
-                        results.put(k, v.get().getTxId());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
+                try {
+                    if(v.isDone() && v.get().getTxId().isDone()){
+                        results.put(k, v.get().getTxId().get());
+
                     }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
                 }
             });
             futMap.keySet().removeAll(results.keySet());

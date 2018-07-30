@@ -9,6 +9,7 @@ import com.medullus.fabricrestapi.domains.dto.invoice.InvoiceServicePojo;
 import com.medullus.fabricrestapi.domains.dto.purchaseOrder.PurchaseOrder;
 
 import java.util.Arrays;
+import java.util.concurrent.CompletableFuture;
 
 public class TestUtil {
     public final static String fcn = "fakefcn";
@@ -24,6 +25,10 @@ public class TestUtil {
         requestHeader.setCaller(caller);
         requestHeader.setOrg(org);
         return requestHeader;
+    }
+
+    public static CompletableFuture<String> getFut(){
+        return CompletableFuture.completedFuture(txId);
     }
 
     public static ResponseHeader getResponseHeader() {

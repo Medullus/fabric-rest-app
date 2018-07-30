@@ -58,7 +58,7 @@ public class DocumentDaoTest {
         when(mockIterator.next()).thenReturn(TestUtil.channel);
         when(mockFabricConfig.getProperty(MHC_FABRIC_CCNAME)).thenReturn(TestUtil.ccName);
         when(mockFabricConfig.getProperty(MHC_FABRIC_CCVER)).thenReturn(TestUtil.ccVer);
-        when(mockFabricClient.invoke(any(),any(), any(), any())).thenReturn(TestUtil.txId);
+        when(mockFabricClient.invoke(any(),any(), any(), any())).thenReturn(TestUtil.getFut());
 
         this.documentServicePojo = new DocumentServicePojo();
         documentServicePojo.setCaller(TestUtil.caller);
@@ -84,6 +84,6 @@ public class DocumentDaoTest {
     @Test
     public void testAddDoc() throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, CryptoException, NetworkConfigurationException, ClassNotFoundException, TransactionException, ProposalException {
         CompletableFuture<TXID> fut = documentDao.addDocument(documentServicePojo, "pk1");
-        assertEquals(TestUtil.txId, fut.get().getTxId());
+        assertEquals(TestUtil.txId, fut.get().getTxId().get());
     }
 }

@@ -36,7 +36,7 @@ public class ErrorTransactionDao {
     public void deleteErrorTransaction(String caller) throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
         String payload;
         try {
-            payload = fabricClient.invoke(caller, MISMATCHES_DELETE, new String[]{""}, getChaincodeInfo());
+            payload = fabricClient.invoke(caller, MISMATCHES_DELETE, new String[]{""}, getChaincodeInfo()).get();
         } catch (ProposalException|ClassNotFoundException|CryptoException|NetworkConfigurationException|ExecutionException|InvalidArgumentException|IllegalAccessException|TransactionException|InterruptedException|InstantiationException|InvocationTargetException|NoSuchMethodException e) {
             logger.error(e);
             throw e;

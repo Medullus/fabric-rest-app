@@ -44,6 +44,10 @@ public class DocumentServiceTest {
     @MockBean
     TXID id;
 
+    @MockBean
+    CompletableFuture<String> txFut;
+
+
 
 
     DocumentService documentService;
@@ -71,7 +75,10 @@ public class DocumentServiceTest {
         when(documentDao.addDocument(any(), any())).thenReturn(fut);
         when(fut.isDone()).thenReturn(true);
         when(fut.get()).thenReturn(id);
-        when(id.getTxId()).thenReturn(TestUtil.txId);
+
+        when(id.getTxId()).thenReturn(txFut);
+        when(txFut.isDone()).thenReturn(true);
+        when(txFut.get()).thenReturn(TestUtil.txId);
 
     }
 

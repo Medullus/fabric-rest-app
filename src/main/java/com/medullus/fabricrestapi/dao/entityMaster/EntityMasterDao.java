@@ -49,7 +49,7 @@ public class EntityMasterDao {
         args[0] = EntityMasterDaoMapper.mapEntityMasterToArgs(entitymasterServicePojo.getEntityMasters());
         String txId;
         try {
-            txId = fabricClient.invoke(entitymasterServicePojo.getCaller(), fcn, args, getChaincodeInfo());
+            txId = fabricClient.invoke(entitymasterServicePojo.getCaller(), fcn, args, getChaincodeInfo()).get();
         } catch (ProposalException|ClassNotFoundException|CryptoException|NetworkConfigurationException|ExecutionException|InvalidArgumentException|IllegalAccessException|TransactionException|InterruptedException|InstantiationException|InvocationTargetException|NoSuchMethodException e) {
             e.printStackTrace();
             logger.error(e);

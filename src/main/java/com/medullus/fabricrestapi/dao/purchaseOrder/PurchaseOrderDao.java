@@ -64,7 +64,7 @@ public class PurchaseOrderDao {
         args[0] = PurchaseOrderDaoMapper.mapPurchaseOrderToArgs(purchaseOrderServicePojo.getPurchaseOrdersList());
         String txId;
         try {
-            txId = fabricClient.invoke(purchaseOrderServicePojo.getCaller(), fcn, args, getChaincodeInfo());
+            txId = fabricClient.invoke(purchaseOrderServicePojo.getCaller(), fcn, args, getChaincodeInfo()).get();
         } catch (ProposalException|ClassNotFoundException|CryptoException|NetworkConfigurationException|ExecutionException|InvalidArgumentException|IllegalAccessException|TransactionException|InterruptedException|InstantiationException|InvocationTargetException|NoSuchMethodException e) {
             e.printStackTrace();
             logger.error(e);

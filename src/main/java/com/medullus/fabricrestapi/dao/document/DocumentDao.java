@@ -7,6 +7,7 @@ import com.medullus.fabricrestapi.domains.dto.document.TXID;
 import com.mhc.fabric.client.FabricClient;
 import com.mhc.fabric.client.config.FabricConfig;
 import com.mhc.fabric.client.models.ChaincodeInfo;
+import io.netty.util.concurrent.CompleteFuture;
 import org.apache.log4j.Logger;
 import org.hyperledger.fabric.sdk.NetworkConfig;
 import org.hyperledger.fabric.sdk.exception.*;
@@ -61,9 +62,9 @@ public class DocumentDao {
     }
 
 
-    private String invokeHelper(String[] args, String fcn, String caller) throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
+    private CompletableFuture<String> invokeHelper(String[] args, String fcn, String caller) throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
 
-        String txId;
+        CompletableFuture<String> txId;
         try {
             txId = fabricClient.invoke(caller, fcn, args, getChaincodeInfo());
         } catch (ProposalException|ClassNotFoundException|CryptoException|NetworkConfigurationException|ExecutionException|InvalidArgumentException|IllegalAccessException|TransactionException|InterruptedException|InstantiationException|InvocationTargetException|NoSuchMethodException e) {

@@ -94,7 +94,7 @@ public class InvoiceDaoTest {
     @Test
     public void testAdd() throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
 
-        doReturn(txId).when(mockFabricClient).invoke(anyString(), anyString(), any(String[].class), any(ChaincodeInfo.class));
+        when(mockFabricClient.invoke(any(), any(), any(), any())).thenReturn(TestUtil.getFut());
 
         String returnedTxId = invoiceDao.addInvoices(invoiceServicePojo);
         assertEquals(txId, returnedTxId);
@@ -110,7 +110,7 @@ public class InvoiceDaoTest {
 
     @Test
     public void testUpdate() throws ExecutionException, InstantiationException, InvocationTargetException, NoSuchMethodException, InterruptedException, IllegalAccessException, InvalidArgumentException, ProposalException, NetworkConfigurationException, CryptoException, TransactionException, ClassNotFoundException {
-        doReturn(txId).when(mockFabricClient).invoke(anyString(), anyString(), any(String[].class), any(ChaincodeInfo.class));
+        when(mockFabricClient.invoke(any(), any(), any(), any())).thenReturn(TestUtil.getFut());
         assertEquals(txId, invoiceDao.updateInvoice(invoiceServicePojo));
     }
 
